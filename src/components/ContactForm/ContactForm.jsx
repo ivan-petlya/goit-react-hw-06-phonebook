@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { nanoid } from 'nanoid';
 import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
 
@@ -29,6 +28,7 @@ class ContactForm extends Component {
         <form onSubmit={this.handleSubmit}>
           <p>👤Name</p>{' '}
           <input
+            className={css.input}
             type="text"
             name="name"
             value={name}
@@ -39,6 +39,7 @@ class ContactForm extends Component {
           />
           <p>📞Number</p>
           <input
+            className={css.input}
             type="tel"
             name="number"
             value={number}
