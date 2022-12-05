@@ -22,9 +22,7 @@ const ContactList = ({ contacts, onDelContact }) => (
 );
 
 ContactList.propTypes = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
+  contacts: PropTypes.array,
   onDelContact: PropTypes.func.isRequired,
 };
 

@@ -26,6 +26,7 @@ export default class App extends React.Component {
       ? Notiflix.Notify.failure(`${name} is allready in contact-list`)
       : this.setState(({ contacts }) => ({ contacts: [contact, ...contacts] }));
   };
+
   changeFilterInput = e => {
     this.setState({ filter: e.target.value });
   };
@@ -42,16 +43,17 @@ export default class App extends React.Component {
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
   };
+
   render() {
+    const { filter } = this.state;
     return (
       <div>
         <h1>Phonebook</h1>
         <ContactForm onSubmit={this.onSubmitForm} />
+
         <h2>Contacts</h2>
-        <Filter
-          filter={this.state.filter}
-          changeFilterInput={this.changeFilterInput}
-        />
+        <Filter filter={filter} changeFilterInput={this.changeFilterInput} />
+
         <ContactList
           contacts={this.findContacts()}
           onDelContact={this.deleteContact}

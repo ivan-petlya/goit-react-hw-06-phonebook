@@ -7,7 +7,7 @@ const Filter = ({ filter, changeFilterInput }) => (
       type="text"
       name={filter}
       onChange={changeFilterInput}
-      placeholder="🔍Find contacts by name🔎"
+      placeholder="🔍Find contacts by name"
     />
   </label>
 );
