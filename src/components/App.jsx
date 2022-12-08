@@ -5,11 +5,9 @@ import { nanoid } from 'nanoid';
 import ContactList from './ContactList/ContactList';
 import Notiflix from 'notiflix';
 export default class App extends React.Component {
+  static defaultProps = { initContacts: [] };
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-    ],
+    contacts: [],
     filter: '',
   };
 
@@ -26,6 +24,22 @@ export default class App extends React.Component {
       ? Notiflix.Notify.failure(`${name} is allready in contact-list`)
       : this.setState(({ contacts }) => ({ contacts: [contact, ...contacts] }));
   };
+  componentDidMount() {
+    const savedContacts = localStorage.getItem('contacts');
+    if (savedContacts !== null) {
+      this.setState({
+        contacts: JSON.parse(savedContacts),
+      });
+    } else {
+      this.setState({ contacts: this.props.initContacts });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
 
   changeFilterInput = e => {
     this.setState({ filter: e.target.value });
