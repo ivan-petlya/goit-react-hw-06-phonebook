@@ -1,37 +1,50 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import css from './ContactForm.module.css';
+import Notiflix from 'notiflix';
+import { nanoid } from 'nanoid';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addContacts, getItem } from '../../redux/contactsSlice';
 
-const ContactForm = ({ addContact }) => {
+export default function ContactForm() {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contact = { name, number };
+  const dispatch = useDispatch();
+  const contacts = useSelector(getItem);
 
   const handleChange = event => {
-    const { value } = event.target;
-
     switch (event.target.name) {
-      case `name`:
-        setName(value);
+      case 'name':
+        setName(event.target.value);
         break;
-
       case 'number':
-        setNumber(value);
+        setNumber(event.target.value);
         break;
-
       default:
         return;
     }
   };
 
-  const handleSubmit = event => {
-    event.preventDefault();
-    addContact(contact);
-    reset();
-  };
   const reset = () => {
     setName('');
     setNumber('');
+  };
+
+  const handleSubmit = event => {
+    event.preventDefault();
+
+    const newContact = { id: nanoid(), name, number };
+
+    const newName = contacts.find(
+      el => el.name.toLowerCase() === name.toLowerCase()
+    );
+    if (newName) {
+      Notiflix.Notify.failure(`${name}  is allready in contact-list`);
+      return;
+    }
+
+    dispatch(addContacts(newContact));
+    reset();
   };
 
   return (
@@ -42,7 +55,7 @@ const ContactForm = ({ addContact }) => {
           className={css.input}
           type="text"
           name="name"
-          placeholder=""
+          placeholder="john johnson"
           value={name}
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
@@ -53,6 +66,7 @@ const ContactForm = ({ addContact }) => {
         📞
         <input
           className={css.input}
+          placeholder="555-55-55"
           type="tel"
           name="number"
           value={number}
@@ -67,12 +81,12 @@ const ContactForm = ({ addContact }) => {
       </form>
     </>
   );
-};
+}
 
-ContactForm.propTypes = {
-  name: PropTypes.string,
-  number: PropTypes.string,
-  onSubmit: PropTypes.func,
-};
+// ContactForm.propTypes = {
+//   name: PropTypes.string,
+//   number: PropTypes.string,
+//   onSubmit: PropTypes.func,
+// };
 
-export default ContactForm;
+// export default ContactForm;

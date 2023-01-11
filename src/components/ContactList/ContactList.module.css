@@ -1,18 +1,26 @@
-.contactsList {
-  width: 400px;
-}
 .delButton {
-  background-color: aquamarine;
+  background-color: rgb(223, 255, 244);
+  padding: 0px;
   margin-left: 30px;
-  border: 4px;
+  border-radius: 20px;
+  border: none;
+  width: 20px;
+  height: 20px;
+}
+.delButton:hover {
+  box-shadow: -3px -3px 15px 3px rgb(13, 121, 194);
 }
 .contactsList__item {
   font-style: italic;
-  background-color: aquamarine;
+  background-color: rgb(223, 255, 244);
   display: flex;
   justify-content: space-between;
   border: 1px solid;
   margin: 5px;
   border-radius: 4px;
   padding: 10px;
+}
+.contactList {
+  color: rgb(13, 121, 194);
+  width: 400px;
 }
